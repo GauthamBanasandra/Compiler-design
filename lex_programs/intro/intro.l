@@ -11,6 +11,13 @@ int yywrap()
 }
 int main()
 {
+	FILE *f=fopen("input.txt", "r");
+	if(!(yyin=f))
+	{
+		printf("invalid file\n");
+		return -1;
+	}
 	yylex();
+	fclose(f);
 	return 0;
 }
