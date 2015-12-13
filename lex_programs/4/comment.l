@@ -1,0 +1,26 @@
+%{
+	#include<stdio.h>
+	int count=0, in=0;	
+%}
+%%
+"//".*	++count;
+"/*"	in=1;
+"*/"	{in=0; ++count;}
+.	{!in?printf("%c", yytext[0]):0;}
+%%
+int yywrap()
+{
+	return 1;
+}
+int main()
+{
+	FILE *f=fopen("input.c", "r");
+	if(!(yyin=f))
+	{
+		printf("file not found\n");
+		return 1;
+	}
+	yylex();
+	printf("comments=%d\n", count);
+	return 0;
+}

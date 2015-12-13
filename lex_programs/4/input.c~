@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+	//Declare		variables.
+	int i=0;
+	/*	
+		loop
+	*/
+	for(i=0; i<10; ++i)
+		printf("loop\n");
+	//One more comment.
+	/*
+		One more 			multi-line comment.*/
+	return 0;
+}
