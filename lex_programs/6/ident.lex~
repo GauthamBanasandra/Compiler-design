@@ -1,0 +1,44 @@
+letter	[a-z]
+digit	[0-9]
+%{
+	#include<stdio.h>
+	#include<string.h>
+	void add_ident(char*);
+	int count=0;
+	char ident[100][100];
+%}
+%%
+{letter}({letter}|{digit})*	add_ident(yytext);
+\".*\" ;
+.|\n|\t ;
+%%
+int yywrap()
+{
+	int i=0;
+	for(i=0; i<count; printf("%s\tcount=%d\n", ident[i++], i));
+	return 1;
+}
+void add_ident(char* s)
+{
+	int i=0;
+	if(count==0)
+		strcpy(ident[count++], s);
+	else
+	{
+		for(i=0; i<count; ++i)
+			if(strcmp(ident[i], s)==0)
+				return;
+		strcpy(ident[count++], s);
+	}
+}
+int main()
+{
+	if(!(yyin=fopen("input.c", "r")))
+	{
+		printf("file not found\n");
+		return 1;
+	}
+	yylex();
+	fclose(yyin);
+	return 0;
+}
