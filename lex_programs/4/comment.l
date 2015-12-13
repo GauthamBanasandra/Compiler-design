@@ -1,12 +1,12 @@
 %{
 	#include<stdio.h>
-	int count=0, in=0;	
+	int count=0, in=0;
 %}
 %%
 "//".*	++count;
 "/*"	in=1;
 "*/"	{in=0; ++count;}
-.	{!in?printf("%c", yytext[0]):0;}
+.	{!in?fprintf(yyout, "%c", yytext[0]):0;}
 %%
 int yywrap()
 {
@@ -20,7 +20,10 @@ int main()
 		printf("file not found\n");
 		return 1;
 	}
+	yyout=fopen("output.c", "w");
 	yylex();
-	printf("comments=%d\n", count);
+	fprintf(yyout, "//comments=%d\n", count);
+	fclose(f);
+	fclose(yyout);
 	return 0;
 }

@@ -461,7 +461,7 @@ char *yytext;
 #line 1 "comment.l"
 #line 2 "comment.l"
 	#include<stdio.h>
-	int count=0, in=0;	
+	int count=0, in=0;
 #line 466 "lex.yy.c"
 
 #define INITIAL 0
@@ -752,7 +752,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 9 "comment.l"
-{!in?printf("%c", yytext[0]):0;}
+{!in?fprintf(yyout, "%c", yytext[0]):0;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -1772,8 +1772,11 @@ int main()
 		printf("file not found\n");
 		return 1;
 	}
+	yyout=fopen("output.c", "w");
 	yylex();
-	printf("comments=%d\n", count);
+	fprintf(yyout, "//comments=%d\n", count);
+	fclose(f);
+	fclose(yyout);
 	return 0;
 }
 
