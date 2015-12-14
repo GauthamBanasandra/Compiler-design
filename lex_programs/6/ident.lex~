@@ -9,8 +9,7 @@ digit	[0-9]
 %}
 %%
 {letter}({letter}|{digit})*	add_ident(yytext);
-\".*\" ;
-.|\n|\t ;
+\".*\"|.|\n|\t ;
 %%
 int yywrap()
 {
@@ -21,15 +20,10 @@ int yywrap()
 void add_ident(char* s)
 {
 	int i=0;
-	if(count==0)
-		strcpy(ident[count++], s);
-	else
-	{
-		for(i=0; i<count; ++i)
-			if(strcmp(ident[i], s)==0)
-				return;
-		strcpy(ident[count++], s);
-	}
+	for(i=0; i<count; ++i)
+		if(strcmp(ident[i], s)==0)
+			return;
+	strcpy(ident[count++], s);
 }
 int main()
 {

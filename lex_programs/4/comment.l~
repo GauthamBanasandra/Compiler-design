@@ -6,8 +6,7 @@
 "//".*	++count;
 "/*"	in=1;
 "*/"	{in=0; ++count;}
-.	{!in?fprintf(yyout, "%c", yytext[0]):0;}
-\n+/(\n|\t)+ ;
+.	if(!in) ECHO;
 %%
 int yywrap()
 {

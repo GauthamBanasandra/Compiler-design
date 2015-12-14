@@ -752,7 +752,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 9 "comment.l"
-{!in?fprintf(yyout, "%c", yytext[0]):0;}
+if(!in) ECHO;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -1766,16 +1766,8 @@ int yywrap()
 }
 int main()
 {
-	FILE *f=fopen("input.c", "r");
-	if(!(yyin=f))
-	{
-		printf("file not found\n");
-		return 1;
-	}
 	yyout=fopen("output.c", "w");
-	yylex();
-	fprintf(yyout, "//comments=%d\n", count);
-	fclose(f);
+	(yyin=fopen("input.c", "r"))?yylex(), fprintf(yyout, "//comments=%d\n", count), fclose(yyin):printf("file not found\n");
 	fclose(yyout);
 	return 0;
 }

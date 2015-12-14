@@ -20,15 +20,10 @@ int yywrap()
 void add_ident(char* s)
 {
 	int i=0;
-	if(count==0)
-		strcpy(ident[count++], s);
-	else
-	{
-		for(i=0; i<count; ++i)
-			if(strcmp(ident[i], s)==0)
-				return;
-		strcpy(ident[count++], s);
-	}
+	for(i=0; i<count; ++i)
+		if(!strcmp(ident[i], s))
+			return;
+	strcpy(ident[count++], s);
 }
 int main()
 {

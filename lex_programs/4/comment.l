@@ -6,7 +6,7 @@
 "//".*	++count;
 "/*"	in=1;
 "*/"	{in=0; ++count;}
-.	{!in?fprintf(yyout, "%c", yytext[0]):0;}
+.	if(!in) ECHO;
 %%
 int yywrap()
 {
@@ -14,16 +14,8 @@ int yywrap()
 }
 int main()
 {
-	FILE *f=fopen("input.c", "r");
-	if(!(yyin=f))
-	{
-		printf("file not found\n");
-		return 1;
-	}
 	yyout=fopen("output.c", "w");
-	yylex();
-	fprintf(yyout, "//comments=%d\n", count);
-	fclose(f);
+	(yyin=fopen("input.c", "r"))?yylex(), fprintf(yyout, "//comments=%d\n", count), fclose(yyin):printf("file not found\n");
 	fclose(yyout);
 	return 0;
 }

@@ -10,7 +10,8 @@ int main()
 	
 	for(i=0; i<10; ++i)
 		printf("loop\n");
-	
+	int y=12;
+	printf("xyz\n");
 	
 
 	return 0;

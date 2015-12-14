@@ -22,7 +22,7 @@ int main()
 		return 1;	
 	}
 	yylex();
-	printf("chars=%d\twords=%d\tlines=%d\tspaces=%d\n", char_, word, line, space);
+	printf("chars=%d\nwords=%d\nlines=%d\nspaces=%d\n", char_, word, line, space);
 	fclose(f);
 	return 0;
 }

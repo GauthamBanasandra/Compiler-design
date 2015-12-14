@@ -734,7 +734,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 6 "count.l"
-{++word; char_+=strlen(yytext);}
+{++word; char_+=yyleng;}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
@@ -1765,15 +1765,7 @@ int yywrap()
 
 int main()
 {
-	FILE *f=fopen("input.txt", "r");
-	if(!(yyin=f))
-	{
-		printf("file not found\n");
-		return 1;	
-	}
-	yylex();
-	printf("chars=%d\nwords=%d\nlines=%d\nspaces=%d\n", char_, word, line, space);
-	fclose(f);
+	(yyin=fopen("input.txt", "r"))?yylex(), printf("chars=%d\nwords=%d\nlines=%d\nspaces=%d\n", char_, word, line, space), fclose(yyin):printf("file not found\n");
 	return 0;
 }
 

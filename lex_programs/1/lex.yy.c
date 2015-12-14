@@ -731,7 +731,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 5 "case_convert.l"
-{printf("%c", yytext[0]-32);}
+{yytext[0]-=32; ECHO;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -1746,15 +1746,7 @@ int yywrap()
 
 int main()
 {
-	FILE *f=fopen("input.txt", "r");
-	if(!(yyin=f))
-	{
-		printf("file not found\n");
-		return -1;
-	}
-	yylex();
-	fclose(f);
-	
+	(yyin=fopen("input.txt", "r"))?yylex(), fclose(yyin):printf("file not found\n");
 	return 0;
 }
 
