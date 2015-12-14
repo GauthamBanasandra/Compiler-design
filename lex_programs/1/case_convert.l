@@ -2,7 +2,7 @@
 	#include<stdio.h>
 %}
 %%
-[a-z] {printf("%c", yytext[0]-32);}
+[a-z] {yytext[0]-=32; ECHO;}
 %%
 int yywrap()
 {
@@ -11,14 +11,6 @@ int yywrap()
 
 int main()
 {
-	FILE *f=fopen("input.txt", "r");
-	if(!(yyin=f))
-	{
-		printf("file not found\n");
-		return -1;
-	}
-	yylex();
-	fclose(f);
-	
+	(yyin=fopen("input.txt", "r"))?yylex(), fclose(yyin):printf("file not found\n");
 	return 0;
 }
