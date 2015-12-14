@@ -1,0 +1,8 @@
+%{
+	#include"y.tab.h"
+	extern int yylval;
+%}
+%%
+a	{yylval='a'; return A;}
+b	{yylval='b'; return B;}
+.	yyerror("invalid char");

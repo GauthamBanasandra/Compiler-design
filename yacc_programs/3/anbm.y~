@@ -1,0 +1,26 @@
+%{
+	#include<stdio.h>
+%}
+%token A B
+%start S
+%%
+S : term1 term2;
+term1 : A term1
+| A
+;
+term2 : B term2
+|
+;
+%%
+int yyerror(char *s)
+{
+	return 1;
+}
+int main()
+{
+	if(!yyparse())
+		printf("valid\n");
+	else
+		printf("invalid\n");
+	return 0;
+}
