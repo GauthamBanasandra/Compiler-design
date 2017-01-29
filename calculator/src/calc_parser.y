@@ -1,4 +1,9 @@
 %{
+	#include <stdio.h>
+
+	int yylex();
+	void yyerror(char*);
+
 	double vbltable[26];
 %}
 %union {
